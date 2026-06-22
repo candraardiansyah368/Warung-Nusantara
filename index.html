@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Firebase Interface - Basis Data Candra</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 40px; background-color: #f4f4f9; color: #333; }
+        .container { max-width: 500px; background: white; padding: 25px; border-radius: 8px; box-shadow: 0 4px 6px rgba(0,0,0,0.1); margin-bottom: 20px; margin-left: auto; margin-right: auto; }
+        h2 { margin-top: 0; color: #0288d1; text-align: center; }
+        input { width: 100%; padding: 10px; margin: 10px 0; border: 1px solid #ccc; border-radius: 4px; box-sizing: border-box; }
+        button { width: 100%; padding: 10px; background-color: #0288d1; color: white; border: none; border-radius: 4px; cursor: pointer; font-size: 16px; margin-top: 5px; }
+        button:hover { background-color: #01579b; }
+        .status { margin-top: 15px; font-weight: bold; text-align: center; min-height: 20px; }
+    </style>
+</head>
+<body>
+
+    <!-- INTERFACE: AUTHENTICATION -->
+    <div class="container">
+        <h2>Firebase Auth (Registrasi)</h2>
+        <input type="email" id="authEmail" placeholder="Masukkan Email">
+        <input type="password" id="authPassword" placeholder="Masukkan Password">
+        <button id="btnRegister">Daftar Akun</button>
+        <div id="authStatus" class="status"></div>
+    </div>
+
+    <!-- INTERFACE: FIRESTORE DATABASE -->
+    <div class="container">
+        <h2>Firestore DB (Simpan Data)</h2>
+        <input type="text" id="namaInput" placeholder="Masukkan Nama">
+        <input type="text" id="pesanInput" placeholder="Masukkan Pesan">
+        <button id="btnSimpan">Simpan ke Firestore</button>
+        <div id="dbStatus" class="status"></div>
+    </div>
+
+    <!-- LOGIC: FIREBASE INITIALIZATION & OPERATIONS -->
+    <script type="module">
+        // 1. Import SDK Firebase Modules resmi (v10)
+        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+        import { getAuth, createUserWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+        import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+        // 2. Konfigurasi Firebase Anda
+        const firebaseConfig = {
+            apiKey: "AIzaSyCm28ZO8SMYmw5ZVYJQ9WWOkEEr7e22Gh8",
+            authDomain: "basis-data-candra.firebaseapp.com",
+            projectId: "basis-data-candra",
+            storageBucket: "basis-data-candra.firebasestorage.app",
+            messagingSenderId: "575329921667",
+            appId: "1:575329921667:web:4f4c049a54f5e96ac289b6"
+        };
+
+        // 3. Inisialisasi Firebase Services
+        const app = initializeApp(firebaseConfig);
+        const auth = getAuth(app);
+        const db = getFirestore(app);
+
+        // 4. Handler untuk Registrasi User
+        document.getElementById('btnRegister').addEventListener('click', async () => {
+            const email = document.getElementById('authEmail').value;
+            const password = document.getElementById('authPassword').value;
+            const statusDiv = document.getElementById('authStatus');
+
+            if (!email || !password) {
+                statusDiv.innerText = "Email dan password wajib diisi!";
+                statusDiv.style.color = "#d32f2f";
+                return;
+            }
+
+            try {
+                const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+                statusDiv.innerText = `Registrasi Berhasil! User: ${userCredential.user.email}`;
+                statusDiv.style.color = "#2e7d32";
+            } catch (error) {
+                statusDiv.innerText = `Error: ${error.message}`;
+                statusDiv.style.color = "#d32f2f";
+            }
+        });
+
+        // 5. Handler untuk Simpan Data ke Firestore
+        document.getElementById('btnSimpan').addEventListener('click', async () => {
+            const nama = document.getElementById('namaInput').value;
+            const pesan = document.getElementById('pesanInput').value;
+            const statusDiv = document.getElementById('dbStatus');
+
+            if (!nama || !pesan) {
+                statusDiv.innerText = "Nama dan pesan wajib diisi!";
+                statusDiv.style.color = "#d32f2f";
+                return;
+            }
+
+            try {
+                // Menyimpan data ke koleksi bernama 'kontak'
+                const docRef = await addDoc(collection(db, "kontak"), {
+                    nama: nama,
+                    pesan: pesan,
+                    timestamp: new Date()
+                });
+                statusDiv.innerText = `Data masuk! ID Dokumen: ${docRef.id}`;
+                statusDiv.style.color = "#2e7d32";
+                
+                // Reset form setelah sukses
+                document.getElementById('namaInput').value = '';
+                document.getElementById('pesanInput').value = '';
+            } catch (error) {
+                statusDiv.innerText = `Error: ${error.message}`;
+                statusDiv.style.color = "#d32f2f";
+            }
+        });
+    </script>
+</body>
+</html>
