@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="id">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Warung Nusantara</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+</head>
+
+<body>
+
+<header>
+
+<nav class="navbar">
+
+<div class="logo">
+🍽️ Warung Nusantara
+</div>
+
+<ul>
+
+<li><a href="#home">Home</a></li>
+
+<li><a href="#menu">Menu</a></li>
+
+<li><a href="#pesan">Pesan</a></li>
+
+<li><a href="#riwayat">Pesanan</a></li>
+
+</ul>
+
+</nav>
+
+</header>
+
+<section class="hero" id="home">
+
+<div class="hero-text">
+
+<h1>Selamat Datang di Warung Nusantara</h1>
+
+<p>
+
+Nikmati cita rasa khas Indonesia dengan sistem pemesanan online berbasis Firebase Firestore.
+
+</p>
+
+<a href="#menu" class="btn">
+
+Lihat Menu
+
+</a>
+
+</div>
+
+<div class="hero-image">
+
+<img src="images/hero.jpg" alt="Warung Nusantara">
+
+</div>
+
+</section>
+
+<section class="restaurant">
+
+<h2>Pilih Cabang Restoran</h2>
+
+<select id="restaurantSelect">
+
+<option value="W0001">
+Warung Nusantara Jombang
+</option>
+
+<option value="W0002">
+Warung Nusantara Kediri
+</option>
+
+</select>
+
+</section>
+
+<section id="menu">
+
+<h2 class="title">
+
+Menu Favorit
+
+</h2>
+
+<div id="menu-list" class="menu-grid">
+
+<!-- Menu dari Firebase -->
+
+</div>
+
+</section>
+
+<section id="pesan">
+
+<h2 class="title">
+
+Form Pemesanan
+
+</h2>
+
+<form id="orderForm">
+
+<input
+type="text"
+id="customerName"
+placeholder="Nama Pelanggan"
+required>
+
+<input
+type="text"
+id="customerPhone"
+placeholder="Nomor HP"
+required>
+
+<input
+type="number"
+id="tableNumber"
+placeholder="Nomor Meja"
+required>
+
+<select id="menuSelect" required>
+
+<option value="">
+Pilih Menu
+</option>
+
+</select>
+
+<input
+type="number"
+id="qty"
+placeholder="Jumlah"
+min="1"
+value="1"
+required>
+
+<h3 class="total">
+Total Harga :
+<span id="totalPrice">Rp 0</span>
+</h3>
+
+<button type="submit">
+
+Pesan Sekarang
+
+</button>
+
+</form>
+
+</section>
+
+<section id="riwayat">
+
+<h2 class="title">
+
+Daftar Pesanan
+
+</h2>
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Nama</th>
+
+<th>Meja</th>
+
+<th>Menu</th>
+
+<th>Qty</th>
+
+<th>Total</th>
+
+<th>Status</th>
+
+<th>Aksi</th>
+
+</tr>
+
+</thead>
+
+<tbody id="orderTable">
+</tbody>
+
+</table>
+
+</section>
+
+<section class="about">
+
+<div class="about-content">
+
+<h2>Tentang Warung Nusantara</h2>
+
+<p>
+
+Warung Nusantara merupakan restoran yang menyediakan berbagai makanan khas Indonesia dengan cita rasa autentik. Sistem ini dibuat menggunakan Firebase Firestore sehingga menu dan pesanan dapat diperbarui secara realtime.
+
+</p>
+
+</div>
+
+</section>
+
+<footer>
+
+<div class="footer-content">
+
+<h3>Warung Nusantara</h3>
+
+<p>
+Jl. Ahmad Yani No. 5, Jombang
+</p>
+
+<p>
+☎ +62 812-3456-7890
+</p>
+
+<p>
+
+© 2026 Warung Nusantara | Firebase Firestore
+
+</p>
+
+</div>
+
+</footer>
+
+<script type="module" src="script.js"></script>
+
+</body>
+
+</html>
